@@ -2,7 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 
-import Main from './components/main';
+import Main from './components/main.container';
 import store from './store';
 import './styles.css';
 
