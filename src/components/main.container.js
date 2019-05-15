@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import RedditList from './reddit-list.component';
 
-import {getReddits} from '../actions/reddit.actions';
+import {searchReddits, getSubReddit} from '../actions/reddit.actions';
 
 class App extends Component {
   static mapStateToProps = (state) => {
@@ -12,14 +12,15 @@ class App extends Component {
   };
 
   static mapDispatchToProps = {
-    getReddits,
+    searchReddits,
+    getSubReddit,
   };
 
   componentDidMount() {
-    this.props.getReddits();
+    this.props.getSubReddit('r/suomi');
   }
 
-  onSearchTermChange = (e) => this.props.getReddits(e.target.value);
+  onSearchTermChange = (e) => this.props.searchReddits(e.target.value);
 
   render() {
     return (
