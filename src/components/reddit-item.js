@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const RedditItem = styled.div`
+const Item = styled.div`
   padding: 0.5rem;
   margin: 0.5rem;
   background-color: white;
@@ -21,9 +21,33 @@ const SelfText = styled.div`
   overflow-wrap: break-word;
 `;
 
-export default (props) => (
-  <RedditItem>
-    <Title>{props.item.data.title}</Title>
-    <SelfText>{props.item.data.selftext}</SelfText>
-  </RedditItem>
-);
+const Image = styled.img`
+  width: 100%;
+  height: auto;
+`;
+
+class RedditItem extends React.Component {
+  escape = (url) => url.replace(/&amp;/g, '&');
+
+  getImageUrl = (data) =>
+    data.preview.images[0].resolutions.length
+      ? this.escape(data.preview.images[0].resolutions.pop().url)
+      : '';
+
+  render() {
+    const {data} = this.props.item;
+    const {title, selftext} = data;
+    const previewEnabled = data.preview && data.preview.enabled;
+    return (
+      <Item>
+        <Title>{title}</Title>
+        <SelfText>{selftext}</SelfText>
+        {previewEnabled ? (
+          <Image key={`image-${data.jd}`} src={this.getImageUrl(data)} />
+        ) : null}
+      </Item>
+    );
+  }
+}
+
+export default RedditItem;
