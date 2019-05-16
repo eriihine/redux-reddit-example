@@ -13,6 +13,9 @@ export default (state = INITIAL_STATE, action) => {
     case TYPES.SEARCH_REDDITS: {
       return Object.assign({}, state, {data: action.payload});
     }
+    case TYPES.CLEAR_REDDIT_STORE: {
+      return Object.assign({}, state, {data: []});
+    }
     case TYPES.LOAD_SUB_REDDIT: {
       return Object.assign({}, state, {data: action.payload});
     }

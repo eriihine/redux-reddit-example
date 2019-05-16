@@ -2,13 +2,18 @@
   "name": "redux-example",
   "version": "1.0.0",
   "description": "",
-  "keywords": [],
+  "keywords": [
+    "react",
+    "redux",
+    "redux-thunk",
+    "example"
+  ],
   "main": "src/index.js",
   "dependencies": {
     "axios": "0.18.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-infinite-scroller": "^1.2.4",
+    "react-infinite-scroller": "1.2.4",
     "react-redux": "7.0.3",
     "react-scripts": "2.1.8",
     "redux": "4.0.1",

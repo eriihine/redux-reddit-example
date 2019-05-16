@@ -14,8 +14,6 @@ const Button = styled.button`
   color: black;
   padding: 10px 20px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
   margin: 4px 2px;
   cursor: pointer;
   height: 40px;
@@ -43,8 +41,10 @@ const SearchInput = styled.input`
 `;
 export default (props) => (
   <Header>
-    <SearchInput onChange={props.search} />
-    <Button>Clear</Button>
-    <Button>Images only</Button>
+    <SearchInput placeholder='Search..' onChange={props.search} />
+    <Button onClick={props.clearRedditStore}>Clear</Button>
+    <Button onClick={props.setFilterImages}>
+      {props.filterImages ? 'All posts' : 'Images only'}
+    </Button>
   </Header>
 );

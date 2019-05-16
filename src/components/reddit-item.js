@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import logo from '../resources/logo.png';
 
 const Item = styled.div`
   padding: 0.5rem;
@@ -12,8 +13,16 @@ const Item = styled.div`
 `;
 
 const Title = styled.div`
-  font-weight: bold;
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: row;
+  align-items: center;
   margin: 1rem;
+`;
+
+const TitleText = styled.div`
+  font-weight: bold;
+  margin-left: 0.5rem;
 `;
 
 const SelfText = styled.div`
@@ -24,6 +33,10 @@ const SelfText = styled.div`
 const Image = styled.img`
   width: 100%;
   height: auto;
+`;
+
+const Logo = styled.img`
+  height: 20px;
 `;
 
 class RedditItem extends React.Component {
@@ -38,14 +51,23 @@ class RedditItem extends React.Component {
     const {data} = this.props.item;
     const {title, selftext} = data;
     const previewEnabled = data.preview && data.preview.enabled;
+
+    // skip reddits that do not have images, if filter images is true
+    if (!previewEnabled && this.props.filterImages) return null;
+
     return (
-      <Item>
-        <Title>{title}</Title>
-        <SelfText>{selftext}</SelfText>
-        {previewEnabled ? (
-          <Image key={`image-${data.jd}`} src={this.getImageUrl(data)} />
-        ) : null}
-      </Item>
+      !this.props.loading && (
+        <Item>
+          <Title>
+            <Logo src={logo} />
+            <TitleText>{title}</TitleText>
+          </Title>
+          <SelfText>{selftext}</SelfText>
+          {previewEnabled ? (
+            <Image key={`image-${data.jd}`} src={this.getImageUrl(data)} />
+          ) : null}
+        </Item>
+      )
     );
   }
 }

@@ -13,9 +13,19 @@ const RedditList = styled.div`
 
 export default (props) => (
   <RedditList>
-    <Header search={props.search} />
+    <Header
+      setFilterImages={props.setFilterImages}
+      clearRedditStore={props.clearRedditStore}
+      search={props.search}
+      filterImages={props.filterImages}
+    />
     {props.data.map((item) => (
-      <RedditItem key={item.data.id} item={item} />
+      <RedditItem
+        key={item.data.id}
+        item={item}
+        loading={props.loading}
+        filterImages={props.filterImages}
+      />
     ))}
   </RedditList>
 );

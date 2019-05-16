@@ -4,6 +4,7 @@ export const TYPES = {
   LOAD_SUB_REDDIT: 'LOAD_SUB_REDDIT',
   SEARCH_REDDITS: 'SEARCH_REDDITS',
   SET_BUSY: 'SET_BUSY',
+  CLEAR_REDDIT_STORE: 'CLEAR_REDDIT_STORE',
 };
 
 export const setBusy = (isBusy) => {
@@ -11,6 +12,14 @@ export const setBusy = (isBusy) => {
     dispatch({
       type: TYPES.SET_BUSY,
       isBusy,
+    });
+  };
+};
+
+export const clearRedditStore = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: TYPES.CLEAR_REDDIT_STORE,
     });
   };
 };

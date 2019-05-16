@@ -3,7 +3,6 @@ import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import reduxThunk from 'redux-thunk';
 
 import reducers from './reducers';
-import './styles.css';
 
 const composeEnhancers = composeWithDevTools({name: 'redux.demo'});
 
