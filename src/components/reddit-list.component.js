@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import InfiniteScroll from 'react-infinite-scroller';
+
 import RedditItem from './reddit-item';
 import Header from './header.component';
 
@@ -8,24 +10,64 @@ const RedditList = styled.div`
   flex: 1 1 100%;
   flex-direction: column;
   align-items: center;
+  justify-items: center;
   padding: 1rem;
 `;
 
-export default (props) => (
-  <RedditList>
-    <Header
-      setFilterImages={props.setFilterImages}
-      clearRedditStore={props.clearRedditStore}
-      search={props.search}
-      filterImages={props.filterImages}
-    />
-    {props.data.map((item) => (
+const StyledInfiniteScroll = styled(InfiniteScroll)`
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Loader = styled.div``;
+
+class RedditListComponent extends React.Component {
+  getItems = () => {
+    const {filterImages, data, loading} = this.props;
+    return data.map((item) => (
       <RedditItem
         key={item.data.id}
         item={item}
-        loading={props.loading}
-        filterImages={props.filterImages}
+        loading={loading}
+        filterImages={filterImages}
       />
-    ))}
-  </RedditList>
-);
+    ));
+  };
+
+  loadMore = () => {
+    alert('load more');
+  };
+
+  render() {
+    const {
+      setFilterImages,
+      clearRedditStore,
+      search,
+      filterImages,
+      after,
+    } = this.props;
+
+    return (
+      <RedditList>
+        <Header
+          setFilterImages={setFilterImages}
+          clearRedditStore={clearRedditStore}
+          search={search}
+          filterImages={filterImages}
+        />
+        <StyledInfiniteScroll
+          pageStart={0}
+          initialLoad={false}
+          loadMore={this.props.loadMoreReddits}
+          hasMore={after != null}
+          loader={<Loader key={0}>Loading ...</Loader>}>
+          {this.getItems()}
+        </StyledInfiniteScroll>
+      </RedditList>
+    );
+  }
+}
+
+export default RedditListComponent;

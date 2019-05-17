@@ -5,6 +5,7 @@ export const TYPES = {
   SEARCH_REDDITS: 'SEARCH_REDDITS',
   SET_BUSY: 'SET_BUSY',
   CLEAR_REDDIT_STORE: 'CLEAR_REDDIT_STORE',
+  LOAD_MORE_REDDITS: 'LOAD_MORE_REDDITS',
 };
 
 export const setBusy = (isBusy) => {
@@ -26,39 +27,72 @@ export const clearRedditStore = () => {
 
 export const searchReddits = (searchTerm = 'suomi') => {
   return async (dispatch, getState) => {
-    let payload = [];
+    let after,
+      children = [];
     try {
       dispatch(setBusy(true));
       const response = await axios.get(
         `https://www.reddit.com/search.json?q=${searchTerm}`,
       );
-      payload = response.data.data.children;
+      children = response.data.data.children;
+      after = response.data.data.after;
     } catch (error) {
       console.log(error);
     }
     dispatch({
       type: TYPES.SEARCH_REDDITS,
-      payload,
+      children,
+      after,
+      searchTerm,
     });
     dispatch(setBusy(false));
   };
 };
 
+export const loadMoreReddits = () => {
+  // TODO: save / get search term from redux
+  return async (dispatch, getState) => {
+    const after = getState().reddits.after;
+    const searchTerm = getState().reddits.searchTerm;
+    let nextAfter = null,
+      children = [];
+    if (after) {
+      try {
+        const response = await axios.get(
+          `https://www.reddit.com/search.json?q=${searchTerm}&count=25&after=${after}`,
+        );
+        children = response.data.data.children;
+        nextAfter = response.data.data.after;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    dispatch({
+      type: TYPES.LOAD_MORE_REDDITS,
+      children,
+      after: nextAfter,
+    });
+  };
+};
+
 export const getSubReddit = (subReddit = 'r/suomi') => {
   return async (dispatch, getState) => {
-    let payload = [];
+    let after,
+      children = [];
     dispatch(setBusy(true));
     try {
       const response = await axios.get(
         `https://www.reddit.com/${subReddit}.json`,
       );
-      payload = response.data.data.children;
+      children = response.data.data.children;
+      after = response.data.data.after;
     } catch (error) {
       console.log(error);
     }
     dispatch({
       type: TYPES.LOAD_SUB_REDDIT,
-      payload,
+      children,
+      after,
     });
     dispatch(setBusy(false));
   };

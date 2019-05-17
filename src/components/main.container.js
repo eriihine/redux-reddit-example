@@ -4,8 +4,8 @@ import RedditList from './reddit-list.component';
 
 import {
   searchReddits,
-  getSubReddit,
   clearRedditStore,
+  loadMoreReddits,
 } from '../actions/reddit.actions';
 import {setFilterImages} from '../actions/app.actions';
 
@@ -15,18 +15,19 @@ class App extends Component {
       data: state.reddits.data,
       loading: state.reddits.loading,
       filterImages: state.app.filterImages,
+      after: state.reddits.after,
     };
   };
 
   static mapDispatchToProps = {
     searchReddits,
-    getSubReddit,
     clearRedditStore,
     setFilterImages,
+    loadMoreReddits,
   };
 
   componentDidMount() {
-    this.props.getSubReddit('r/suomi');
+    this.props.searchReddits('suomi');
   }
 
   onSearchTermChange = (e) => this.props.searchReddits(e.target.value);
@@ -36,10 +37,12 @@ class App extends Component {
       <RedditList
         setFilterImages={this.props.setFilterImages}
         clearRedditStore={this.props.clearRedditStore}
+        loadMoreReddits={this.props.loadMoreReddits}
         data={this.props.data}
         search={this.onSearchTermChange}
         loading={this.props.loading}
         filterImages={this.props.filterImages}
+        after={this.props.after}
       />
     );
   }

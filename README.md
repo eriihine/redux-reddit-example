@@ -1,2 +1,3 @@
 # redux-reddit-example
-Created with CodeSandbox
+
+    - An example to demonstrate basic usage of redux, react-redux and redux-thunk
