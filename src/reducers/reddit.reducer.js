@@ -1,10 +1,11 @@
-import {TYPES} from '../actions/reddit.actions';
+import {TYPES} from "../actions/reddit.actions";
 
 const INITIAL_STATE = {
   data: [],
   loading: false,
   after: null,
-  searchTerm: 'suomi',
+  searchTerm: "suomi",
+  comments: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,6 +33,11 @@ export default (state = INITIAL_STATE, action) => {
       return Object.assign({}, state, {
         data: action.children,
         after: action.after,
+      });
+    }
+    case TYPES.LOAD_COMMENTS: {
+      return Object.assign({}, state, {
+        comments: action.comments,
       });
     }
     default: {

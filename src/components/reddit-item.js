@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import logo from '../resources/logo.png';
+import React from "react";
+import styled from "styled-components";
+import {Link} from "react-router-dom";
+import logo from "../resources/logo.png";
 
 const Item = styled.div`
   padding: 0.5rem;
@@ -39,13 +40,15 @@ const Logo = styled.img`
   height: 20px;
 `;
 
+const Comments = styled.a``;
+
 class RedditItem extends React.Component {
-  escape = (url) => url.replace(/&amp;/g, '&');
+  escape = (url) => url.replace(/&amp;/g, "&");
 
   getImageUrl = (data) =>
     data.preview.images[0].resolutions.length
       ? this.escape(data.preview.images[0].resolutions.pop().url)
-      : '';
+      : "";
 
   render() {
     const {data} = this.props.item;
@@ -64,8 +67,15 @@ class RedditItem extends React.Component {
           </Title>
           <SelfText>{selftext}</SelfText>
           {previewEnabled ? (
-            <Image key={`image-${data.jd}`} src={this.getImageUrl(data)} />
+            <Image key={`image-${data.id}`} src={this.getImageUrl(data)} />
           ) : null}
+          <Link
+            to={{
+              pathname: "/comments",
+              search: `?permalink=${data.permalink}`,
+            }}>
+            comments: {data.num_comments}
+          </Link>
         </Item>
       )
     );

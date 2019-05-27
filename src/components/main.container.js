@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import RedditList from './reddit-list.component';
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import RedditList from "./reddit-list.component";
 
 import {
   searchReddits,
   clearRedditStore,
   loadMoreReddits,
-} from '../actions/reddit.actions';
-import {setFilterImages} from '../actions/app.actions';
+} from "../actions/reddit.actions";
+import {setFilterImages} from "../actions/app.actions";
 
 class App extends Component {
   static mapStateToProps = (state) => {
@@ -16,6 +16,7 @@ class App extends Component {
       loading: state.reddits.loading,
       filterImages: state.app.filterImages,
       after: state.reddits.after,
+      searchTerm: state.reddits.searchTerm,
     };
   };
 
@@ -27,7 +28,8 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.props.searchReddits('suomi');
+    const {searchTerm} = this.props;
+    this.props.searchReddits(searchTerm || "suomi");
   }
 
   onSearchTermChange = (e) => this.props.searchReddits(e.target.value);

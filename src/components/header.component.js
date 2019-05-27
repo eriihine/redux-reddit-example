@@ -1,29 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import Button from "./button.component";
 
 const Header = styled.div`
   display: flex;
   flex: 1 1 100%;
   width: 70%;
   align-items: center;
-`;
-
-const Button = styled.button`
-  background-color: white;
-  border: none;
-  color: black;
-  padding: 10px 20px;
-  text-align: center;
-  margin: 4px 2px;
-  cursor: pointer;
-  height: 40px;
-  border-radius: 16px;
-  :focus {
-    outline: none;
-  }
-  :hover {
-    background-color: #f1f1f1;
-  }
 `;
 
 const SearchInput = styled.input`
@@ -41,10 +24,10 @@ const SearchInput = styled.input`
 `;
 export default (props) => (
   <Header>
-    <SearchInput placeholder='Search..' onChange={props.search} />
+    <SearchInput placeholder="Search.." onChange={props.search} />
     <Button onClick={props.clearRedditStore}>Clear</Button>
     <Button onClick={props.setFilterImages}>
-      {props.filterImages ? 'All posts' : 'Images only'}
+      {props.filterImages ? "All posts" : "Images only"}
     </Button>
   </Header>
 );

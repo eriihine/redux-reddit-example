@@ -1,10 +1,13 @@
-import React from 'react';
-import {render} from 'react-dom';
-import {Provider} from 'react-redux';
-import {createGlobalStyle} from 'styled-components';
+import React from "react";
+import {render} from "react-dom";
+import {HashRouter} from "react-router-dom";
+import {Provider} from "react-redux";
+import {Route} from "react-router-dom";
+import {createGlobalStyle} from "styled-components";
 
-import Main from './components/main.container';
-import store from './store';
+import Main from "./components/main.container";
+import CommentsContainer from "./components/comments.container";
+import store from "./store";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -15,16 +18,23 @@ const GlobalStyle = createGlobalStyle`
 
 class App extends React.Component {
   render() {
-    return <Main />;
+    return (
+      <React.Fragment>
+        <Route path="/" exact component={Main} />
+        <Route path="/comments/" component={CommentsContainer} />
+      </React.Fragment>
+    );
   }
 }
 
 render(
   <React.Fragment>
     <GlobalStyle />
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <HashRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </HashRouter>
   </React.Fragment>,
-  document.getElementById('root'),
+  document.getElementById("root"),
 );

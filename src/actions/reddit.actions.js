@@ -1,11 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const TYPES = {
-  LOAD_SUB_REDDIT: 'LOAD_SUB_REDDIT',
-  SEARCH_REDDITS: 'SEARCH_REDDITS',
-  SET_BUSY: 'SET_BUSY',
-  CLEAR_REDDIT_STORE: 'CLEAR_REDDIT_STORE',
-  LOAD_MORE_REDDITS: 'LOAD_MORE_REDDITS',
+  LOAD_SUB_REDDIT: "LOAD_SUB_REDDIT",
+  SEARCH_REDDITS: "SEARCH_REDDITS",
+  SET_BUSY: "SET_BUSY",
+  CLEAR_REDDIT_STORE: "CLEAR_REDDIT_STORE",
+  LOAD_MORE_REDDITS: "LOAD_MORE_REDDITS",
+  LOAD_COMMENTS: "LOAD_COMMENTS",
 };
 
 export const setBusy = (isBusy) => {
@@ -25,7 +26,7 @@ export const clearRedditStore = () => {
   };
 };
 
-export const searchReddits = (searchTerm = 'suomi') => {
+export const searchReddits = (searchTerm = "suomi") => {
   return async (dispatch, getState) => {
     let after,
       children = [];
@@ -50,7 +51,6 @@ export const searchReddits = (searchTerm = 'suomi') => {
 };
 
 export const loadMoreReddits = () => {
-  // TODO: save / get search term from redux
   return async (dispatch, getState) => {
     const after = getState().reddits.after;
     const searchTerm = getState().reddits.searchTerm;
@@ -75,7 +75,24 @@ export const loadMoreReddits = () => {
   };
 };
 
-export const getSubReddit = (subReddit = 'r/suomi') => {
+export const loadComments = (permalink) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(
+        `https://www.reddit.com/${permalink}.json`,
+      );
+      const comments = response.data;
+      dispatch({
+        type: TYPES.LOAD_COMMENTS,
+        comments,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getSubReddit = (subReddit = "r/suomi") => {
   return async (dispatch, getState) => {
     let after,
       children = [];
