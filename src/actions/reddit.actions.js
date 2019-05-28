@@ -7,6 +7,7 @@ export const TYPES = {
   CLEAR_REDDIT_STORE: "CLEAR_REDDIT_STORE",
   LOAD_MORE_REDDITS: "LOAD_MORE_REDDITS",
   LOAD_COMMENTS: "LOAD_COMMENTS",
+  LOAD_REDDITS_BY_AUTHOR: "LOAD_REDDITS_BY_AUTHOR",
 };
 
 export const setBusy = (isBusy) => {
@@ -85,6 +86,24 @@ export const loadComments = (permalink) => {
       dispatch({
         type: TYPES.LOAD_COMMENTS,
         comments,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const loadRedditsByAuthor = (author) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(
+        `https://www.reddit.com/user/${author}.json`,
+      );
+      const redditsByAuthor = response.data.data.children;
+      dispatch({
+        type: TYPES.LOAD_REDDITS_BY_AUTHOR,
+        redditsByAuthor,
+        author,
       });
     } catch (error) {
       console.log(error);

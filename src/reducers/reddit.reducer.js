@@ -6,6 +6,8 @@ const INITIAL_STATE = {
   after: null,
   searchTerm: "suomi",
   comments: [],
+  redditsByAuthor: [],
+  author: "",
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,9 +37,16 @@ export default (state = INITIAL_STATE, action) => {
         after: action.after,
       });
     }
+
     case TYPES.LOAD_COMMENTS: {
       return Object.assign({}, state, {
         comments: action.comments,
+      });
+    }
+    case TYPES.LOAD_REDDITS_BY_AUTHOR: {
+      return Object.assign({}, state, {
+        redditsByAuthor: action.redditsByAuthor,
+        author: action.author,
       });
     }
     default: {

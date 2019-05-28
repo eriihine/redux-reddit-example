@@ -26,6 +26,10 @@ const TitleText = styled.div`
   margin-left: 0.5rem;
 `;
 
+const SubRedditTittle = styled.div`
+  margin-bottom: 4px;
+`;
+
 const SelfText = styled.div`
   margin: 1rem;
   overflow-wrap: break-word;
@@ -40,8 +44,6 @@ const Logo = styled.img`
   height: 20px;
 `;
 
-const Comments = styled.a``;
-
 class RedditItem extends React.Component {
   escape = (url) => url.replace(/&amp;/g, "&");
 
@@ -52,15 +54,20 @@ class RedditItem extends React.Component {
 
   render() {
     const {data} = this.props.item;
-    const {title, selftext} = data;
+    const {title, selftext, author, link_id, subreddit_name_prefixed} = data;
     const previewEnabled = data.preview && data.preview.enabled;
 
     // skip reddits that do not have images, if filter images is true
-    if (!previewEnabled && this.props.filterImages) return null;
+    // skip also comments if in the listing (no link_id)
+    if ((!previewEnabled && this.props.filterImages) || link_id) return null;
 
     return (
       !this.props.loading && (
         <Item>
+          <SubRedditTittle>{subreddit_name_prefixed}</SubRedditTittle>
+          <Link to={`/user/${author}`}>
+            <i>posted by {author}</i>
+          </Link>
           <Title>
             <Logo src={logo} />
             <TitleText>{title}</TitleText>

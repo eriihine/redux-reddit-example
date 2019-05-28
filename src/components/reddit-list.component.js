@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import InfiniteScroll from 'react-infinite-scroller';
+import React from "react";
+import styled from "styled-components";
+import InfiniteScroll from "react-infinite-scroller";
 
-import RedditItem from './reddit-item';
-import Header from './header.component';
+import RedditItem from "./reddit-item";
+import Header from "./header.component";
 
 const RedditList = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ class RedditListComponent extends React.Component {
   };
 
   loadMore = () => {
-    alert('load more');
+    alert("load more");
   };
 
   render() {
@@ -61,7 +61,7 @@ class RedditListComponent extends React.Component {
           pageStart={0}
           initialLoad={false}
           loadMore={this.props.loadMoreReddits}
-          hasMore={after != null}
+          hasMore={after !== null}
           loader={<Loader key={0}>Loading ...</Loader>}>
           {this.getItems()}
         </StyledInfiniteScroll>

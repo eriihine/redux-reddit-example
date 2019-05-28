@@ -6,6 +6,7 @@ import {Route} from "react-router-dom";
 import {createGlobalStyle} from "styled-components";
 
 import Main from "./components/main.container";
+import AuthorContainer from "./components/author.container";
 import CommentsContainer from "./components/comments.container";
 import store from "./store";
 
@@ -22,6 +23,7 @@ class App extends React.Component {
       <React.Fragment>
         <Route path="/" exact component={Main} />
         <Route path="/comments/" component={CommentsContainer} />
+        <Route path="/user/:author" component={AuthorContainer} />
       </React.Fragment>
     );
   }
