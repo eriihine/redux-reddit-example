@@ -26,10 +26,6 @@ const TitleText = styled.div`
   margin-left: 0.5rem;
 `;
 
-const SubRedditTittle = styled.div`
-  margin-bottom: 4px;
-`;
-
 const SelfText = styled.div`
   margin: 1rem;
   overflow-wrap: break-word;
@@ -64,7 +60,11 @@ class RedditItem extends React.Component {
     return (
       !this.props.loading && (
         <Item>
-          <SubRedditTittle>{subreddit_name_prefixed}</SubRedditTittle>
+          <Link to={`/subreddit/${subreddit_name_prefixed}`}>
+            <div>
+              <i>{subreddit_name_prefixed}</i>
+            </div>
+          </Link>
           <Link to={`/user/${author}`}>
             <i>posted by {author}</i>
           </Link>
