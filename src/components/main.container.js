@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import RedditList from './reddit-list.component';
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import RedditList from "./reddit-list.component";
 
 import {
   searchReddits,
   clearRedditStore,
   loadMoreReddits,
-} from '../actions/reddit.actions';
-import {setFilterImages} from '../actions/app.actions';
+  randomSearch,
+} from "../actions/reddit.actions";
+import {setFilterImages} from "../actions/app.actions";
 
 class App extends Component {
   static mapStateToProps = (state) => {
@@ -16,6 +17,7 @@ class App extends Component {
       loading: state.reddits.loading,
       filterImages: state.app.filterImages,
       after: state.reddits.after,
+      randomTerm: state.reddits.randomTerm,
     };
   };
 
@@ -24,10 +26,21 @@ class App extends Component {
     clearRedditStore,
     setFilterImages,
     loadMoreReddits,
+    randomSearch,
   };
 
   componentDidMount() {
-    this.props.searchReddits('suomi');
+    this.props.searchReddits("suomi");
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.randomTerm &&
+      this.props.randomTerm !== prevProps.randomTerm
+    ) {
+      console.log(this.props.randomTerm, prevProps.randomTerm);
+      this.props.searchReddits(this.props.randomTerm);
+    }
   }
 
   onSearchTermChange = (e) => this.props.searchReddits(e.target.value);
@@ -43,6 +56,7 @@ class App extends Component {
         loading={this.props.loading}
         filterImages={this.props.filterImages}
         after={this.props.after}
+        randomSearch={this.props.randomSearch}
       />
     );
   }

@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Header = styled.div`
   display: flex;
@@ -41,10 +41,11 @@ const SearchInput = styled.input`
 `;
 export default (props) => (
   <Header>
-    <SearchInput placeholder='Search..' onChange={props.search} />
+    <SearchInput placeholder="Search.." onChange={props.search} />
     <Button onClick={props.clearRedditStore}>Clear</Button>
     <Button onClick={props.setFilterImages}>
-      {props.filterImages ? 'All posts' : 'Images only'}
+      {props.filterImages ? "All posts" : "Images only"}
     </Button>
+    <Button onClick={props.randomSearch}>Random</Button>
   </Header>
 );

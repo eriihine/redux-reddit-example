@@ -1,10 +1,10 @@
-import {TYPES} from '../actions/reddit.actions';
+import {TYPES} from "../actions/reddit.actions";
 
 const INITIAL_STATE = {
   data: [],
   loading: false,
   after: null,
-  searchTerm: 'suomi',
+  searchTerm: "suomi",
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -15,6 +15,11 @@ export default (state = INITIAL_STATE, action) => {
         after: action.after,
       });
     }
+
+    case TYPES.RANDOM_SEARCH: {
+      return Object.assign({}, state, {randomTerm: action.searchTerm});
+    }
+
     case TYPES.SET_BUSY: {
       return Object.assign({}, state, {loading: action.isBusy});
     }

@@ -1,11 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
+import randomWords from "random-words";
 
 export const TYPES = {
-  LOAD_SUB_REDDIT: 'LOAD_SUB_REDDIT',
-  SEARCH_REDDITS: 'SEARCH_REDDITS',
-  SET_BUSY: 'SET_BUSY',
-  CLEAR_REDDIT_STORE: 'CLEAR_REDDIT_STORE',
-  LOAD_MORE_REDDITS: 'LOAD_MORE_REDDITS',
+  LOAD_SUB_REDDIT: "LOAD_SUB_REDDIT",
+  SEARCH_REDDITS: "SEARCH_REDDITS",
+  SET_BUSY: "SET_BUSY",
+  CLEAR_REDDIT_STORE: "CLEAR_REDDIT_STORE",
+  LOAD_MORE_REDDITS: "LOAD_MORE_REDDITS",
+  RANDOM_SEARCH: "RANDOM_SEARCH",
+};
+
+export const randomSearch = () => (dispatch) => {
+  const searchTerm = randomWords(); // `${randomWords()}js`;
+  dispatch({
+    type: TYPES.RANDOM_SEARCH,
+    searchTerm,
+  });
 };
 
 export const setBusy = (isBusy) => {
@@ -25,7 +35,7 @@ export const clearRedditStore = () => {
   };
 };
 
-export const searchReddits = (searchTerm = 'suomi') => {
+export const searchReddits = (searchTerm = "suomi") => {
   return async (dispatch, getState) => {
     let after,
       children = [];
@@ -75,7 +85,7 @@ export const loadMoreReddits = () => {
   };
 };
 
-export const getSubReddit = (subReddit = 'r/suomi') => {
+export const getSubReddit = (subReddit = "r/suomi") => {
   return async (dispatch, getState) => {
     let after,
       children = [];

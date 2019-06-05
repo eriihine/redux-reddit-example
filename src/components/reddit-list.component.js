@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import InfiniteScroll from 'react-infinite-scroller';
+import React from "react";
+import styled from "styled-components";
+import InfiniteScroll from "react-infinite-scroller";
 
-import RedditItem from './reddit-item';
-import Header from './header.component';
+import RedditItem from "./reddit-item";
+import Header from "./header.component";
 
 const RedditList = styled.div`
   display: flex;
@@ -36,10 +36,6 @@ class RedditListComponent extends React.Component {
     ));
   };
 
-  loadMore = () => {
-    alert('load more');
-  };
-
   render() {
     const {
       setFilterImages,
@@ -47,6 +43,7 @@ class RedditListComponent extends React.Component {
       search,
       filterImages,
       after,
+      randomSearch,
     } = this.props;
 
     return (
@@ -56,6 +53,7 @@ class RedditListComponent extends React.Component {
           clearRedditStore={clearRedditStore}
           search={search}
           filterImages={filterImages}
+          randomSearch={randomSearch}
         />
         <StyledInfiniteScroll
           pageStart={0}
